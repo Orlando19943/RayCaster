@@ -1,10 +1,9 @@
 from RayCaster import *
+from colors import COLORS
+WIDTH = 800
+HEIGHT = 400
 
-WIDTH = 1000
-HEIGHT = 500
-BLACK = (0,0,0)
-WHITE = (255,255,255)
 MAP = "./map.txt"
 
-game = Raycaster((WIDTH,HEIGHT), MAP, pColor=BLACK)
+game = Raycaster((WIDTH,HEIGHT), MAP, pColor=COLORS[5])
 game.run()

@@ -1,6 +1,7 @@
-from colors import PURPLE
+from colors import COLORS
+from math import pi, cos, sin
 class Map(object):
-    def __init__(self, file,size, blockSize = 25, wallheight = 50):
+    def __init__(self, file,size, blockSize = 40, wallheight = 50):
         self.file = file
         self.map = []
         self.blockSize = blockSize
@@ -16,7 +17,7 @@ class Map(object):
                         self.map.append( list(line.rstrip()))
 
     def drawBlock(self, x, y, id, screen):
-        screen.fill(PURPLE, (x,y, self.blockSize, self.blockSize))
+        screen.fill(COLORS[int(id)], (x,y, self.blockSize, self.blockSize))
 
     def drawMap(self, screen):
         for x in range(0,self.halfWidth,self.blockSize):
@@ -27,3 +28,5 @@ class Map(object):
                     if i < len(self.map[j]):
                         if self.map[j][i] != ' ':
                             self.drawBlock(x, y, self.map[j][i], screen)
+                        else:
+                            self.drawBlock(x, y, 6, screen)

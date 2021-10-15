@@ -1,6 +1,7 @@
 import pygame
 from Player import *
 from Map import *
+from colors import COLORS
 class Raycaster(object):
     def __init__(self, size =(500,500), map = None, pSize = (10,10), pPosition = [50,100], pSpeed=2, pColor=(0,0,0)):
         pygame.init()
@@ -26,9 +27,10 @@ class Raycaster(object):
                     self.player.movePlayer(event.key, pygame)
                 if event.type == pygame.QUIT:
                     run = 0
-            screen.fill(pygame.Color("gray"))
+            screen.fill(COLORS[5])
             self.map.drawMap(screen)
             self.player.drawPlayer(screen)
+            self.player.drawRay(screen, pygame)
             screen.fill(pygame.Color("black"),(0,0,30,30))
             screen.blit(self.fps(), (0,0))
             self.clock.tick(60)
