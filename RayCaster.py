@@ -24,13 +24,13 @@ class Raycaster(object):
         while run:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    self.player.movePlayer(event.key, pygame)
+                    self.player.movePlayer(event.key, pygame, self.map)
                 if event.type == pygame.QUIT:
                     run = 0
             screen.fill(COLORS[5])
             self.map.drawMap(screen)
             self.player.drawPlayer(screen)
-            self.player.drawRay(screen, pygame)
+            self.player.drawRay(screen, pygame, self.map)
             screen.fill(pygame.Color("black"),(0,0,30,30))
             screen.blit(self.fps(), (0,0))
             self.clock.tick(60)
