@@ -1,9 +1,8 @@
 from math import pi, cos, sin, tan
 from random import randint
-
 from colors import COLORS
 class Player(object):
-    def __init__(self, position, size, speed = 5, color = (255,0,0), angle = 0, angularSpeed = 10, fov = 60, ray = 20):
+    def __init__(self, position, size, speed = 5, color = (255,0,0), angle = 0, angularSpeed = 10, fov = 60, ray = 100):
         self.position = position
         self.speed = speed
         self.angularSpeed = angularSpeed
@@ -21,24 +20,21 @@ class Player(object):
         rect = (self.position[0] - 2,self.position[1] - 2,self.size[0],self.size[1])
         screen.fill(self.color,rect)
 
-    def drawRay(self, screen, pygame, map):
+    def drawRay(self, ray, map, limit):
         dist = 0
-        for i in range (self.ray):
-            dist = 0
-            angle =(self.angle*180/pi) -(self.fov/2) + (self.fov*i/self.ray)
-            rads = angle *pi/180
-            pdx = cos(rads)
-            pdy = sin(rads)
-            while True:
-                i = int((self.position[0] + (pdx) * dist)/map.blockSize)
-                j = int((self.position[1] + (pdy) * dist)/map.blockSize)
-                if map.map[j][i] == ' ':
-                    dist+=1
-                else:
-                    break
-            x = self.position[0] + (pdx) * dist
-            y = self.position[1] + (pdy) * dist
-            pygame.draw.line(screen,self.color,(self.position),(x,y))
+        angle =(self.angle*180/pi) -(self.fov/2) + (self.fov*ray/self.ray)
+        rads = angle *pi/180
+        pdx = cos(rads)
+        pdy = sin(rads)
+        while True:
+            i = int((self.position[0]+2 + (pdx) * dist)/map.blockSize)
+            j = int((self.position[1]+2 + (pdy) * dist)/map.blockSize)
+            if map.map[j][i] == ' ':
+                dist+=1
+                if (dist == map.limitDistance) and(limit):
+                    return 1, dist, pdx, pdy, rads
+            elif (map.map[j][i] != ' '):
+                return map.map[j][i], dist, pdx, pdy, rads
 
     def movePlayer(self, move, pygame, map):
         x = self.position[0]
@@ -71,8 +67,8 @@ class Player(object):
             self.pdy = sin(self.angle) * self.speed
             self.pdx2 = cos(self.angle + pi/2) * self.speed
             self.pdy2 = sin(self.angle + pi/2) * self.speed
-        i = int((x+1)/map.blockSize)
-        j = int((y+1)/map.blockSize)
+        i = int((x+2)/map.blockSize)
+        j = int((y+2)/map.blockSize)
         if map.map[j][i] == ' ':
             self.position[0] = x
             self.position[1] = y
