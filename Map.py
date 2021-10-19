@@ -19,12 +19,14 @@ class Map(object):
                         self.map.append( list(line.rstrip()))
 
     def drawBlock(self, x, y, id, screen, pygame):
-        screen.fill(COLORS[int(id)], (x,y, self.blockSize, self.blockSize))
-        #tex = wallTextures[id]
-        #tex = pygame.transform.scale(tex, (self.blocksize, self.blocksize) )
-        #rect = tex.get_rect()
-        #rect = rect.move((x,y))
-        #screen.blit(tex, rect)
+        if id == 2:
+            screen.fill(COLORS[int(id)], (x,y, self.blockSize, self.wallheight))
+            return
+        tex = wallTextures[int(id)]
+        tex = pygame.transform.scale(tex, (self.blockSize, self.blockSize) )
+        rect = tex.get_rect()
+        rect = rect.move((x,y))
+        screen.blit(tex, rect)
 
     def drawMap(self, screen, pygame):
         for x in range(0,self.halfWidth,self.blockSize):

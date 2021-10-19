@@ -72,5 +72,3 @@ class Player(object):
         if map.map[j][i] == ' ':
             self.position[0] = x
             self.position[1] = y
-        
-

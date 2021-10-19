@@ -19,6 +19,7 @@ COLORS = {
 }
 
 wallTextures = {
+    2: pygame.image.load('textures/wall1.png'),
     3: pygame.image.load('textures/wall1.png'),
     4: pygame.image.load('textures/wall2.png'),
     5: pygame.image.load('textures/wall3.png'),
