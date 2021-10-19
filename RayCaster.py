@@ -1,7 +1,7 @@
 import pygame
 from Player import *
 from Map import *
-from colors import COLORS
+from colors import COLORS, wallTextures
 class Raycaster(object):
     def __init__(self, size =(500,500), map = None, pSize = (10,10), pPosition = [50,100], pSpeed=2, pColor=(0,0,0), limit = False):
         pygame.init()
@@ -19,7 +19,7 @@ class Raycaster(object):
 
     def drawRayCaster(self):
         for i in range(self.player.ray):
-            id, dist, pdx, pdy, angle = self.player.drawRay(i, self.map, self.limit)
+            id, dist, pdx, pdy, angle, tx = self.player.drawRay(i, self.map, self.limit)
             x = self.player.position[0] + (pdx) * dist
             y = self.player.position[1] + (pdy) * dist
             pygame.draw.line(self.screen,self.player.color,(self.player.position),(x,y))
@@ -30,11 +30,15 @@ class Raycaster(object):
                 x2 = self.map.halfWidth + int(( ((i+1) / self.player.ray) * self.map.halfWidth))
                 if (x +rayWidth) != x2:
                     rayWidth += 1
-            h = self.size[1] / (dist*cos((angle-self.player.angle))) * self.map.wallheight
+            h = self.size[1] / (dist*cos((angle-self.player.angle)))
+            h *= self.map.wallheight
             y = int((self.map.halfHeight-h) / 2)
-            color_k = 1-min(1,dist/self.map.maxDistance)
-            color = [i*color_k for i in COLORS[int(id)]]
-            self.screen.fill(color, (x, y, rayWidth, h))
+            color_k = (1 - min(1, dist / self.map.maxDistance)) * 255
+            tex = wallTextures[int(id)]
+            tex = pygame.transform.scale(tex, (tex.get_width() * rayWidth, int(h)))
+            #tex.fill((color_k,color_k,color_k), special_flags=pygame.BLEND_MULT)
+            tx = int(tx * tex.get_width())
+            self.screen.blit(tex, (x, y), (tx,0,rayWidth,tex.get_height()))
 
     def run(self):
         screen = pygame.display.set_mode(self.size, pygame.DOUBLEBUF | pygame.HWACCEL )
@@ -61,6 +65,6 @@ class Raycaster(object):
                 screen.blit(self.fps(), (0,0))
                 self.drawRayCaster()
             self.clock.tick(60)
-            pygame.display.update()
+            pygame.display.flip()
 
         pygame.quit()
