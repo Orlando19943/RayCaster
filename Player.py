@@ -34,7 +34,7 @@ class Player(object):
             y += pdy
             i = int((x)/map.blockSize)
             j = int((y)/map.blockSize)
-            if (map.map[j][i] != ' '):
+            if (map.map[j][i] != ' ' and int(map.map[j][i]) != 9):
                 hitX = x - i * map.blockSize
                 hitY = y - j * map.blockSize
                 hit = 0
@@ -84,6 +84,11 @@ class Player(object):
             self.pdy2 = sin(self.angle + pi/2) * self.speed
         i = int((x)/map.blockSize)
         j = int((y)/map.blockSize)
-        if map.map[j][i] == ' ':
+
+        if map.map[j][i] == ' ' or map.map[j][i] == '9':
+            if map.map[j][i] == '9':
+                return True
             self.position[0] = x
             self.position[1] = y
+            return False
+        return False

@@ -7,7 +7,7 @@ GREEN = (0,255,0)
 PURPLE = (131,12,229)
 FOG = (194,211,211)
 BLACK2 = (22,22,22)
-YELLOW = (255,255,0)
+YELLOW = (242, 206, 24)
 COLORS = {
     1: BLACK,
     2: WHITE,
@@ -27,3 +27,9 @@ wallTextures = {
     5: pygame.image.load('textures/wall3.png'),
     6: pygame.image.load('textures/wall4.png'),
     }
+
+MAPS = {
+    1: "./maps/map.txt",
+    2: "./maps/map2.txt",
+    3: "./maps/map3.txt",
+}

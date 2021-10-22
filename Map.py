@@ -1,8 +1,9 @@
-from colors import COLORS, wallTextures
+from colors import COLORS, wallTextures, MAPS
 from math import pi, cos, sin
 class Map(object):
-    def __init__(self, file,size, blockSize = 40, wallheight = 40):
-        self.file = file
+    def __init__(self,size, blockSize = 40, wallheight = 40, actualMap = 1):
+        self.actualMap = actualMap
+        self.file = MAPS[self.actualMap]
         self.map = []
         self.blockSize = blockSize
         self.wallheight = wallheight
@@ -19,14 +20,18 @@ class Map(object):
                         self.map.append( list(line.rstrip()))
 
     def drawBlock(self, x, y, id, screen, pygame):
-        if id == 2:
-            screen.fill(COLORS[int(id)], (x,y, self.blockSize, self.wallheight))
+        if int(id) == 2:
+            screen.fill(COLORS[2], (x,y, self.blockSize, self.wallheight))
             return
-        tex = wallTextures[int(id)]
-        tex = pygame.transform.scale(tex, (self.blockSize, self.blockSize) )
-        rect = tex.get_rect()
-        rect = rect.move((x,y))
-        screen.blit(tex, rect)
+        elif int(id) == 9:
+            screen.fill(COLORS[6], (x,y, self.blockSize, self.wallheight))
+            return
+        elif 3<=int(id)<=6:
+            tex = wallTextures[int(id)]
+            tex = pygame.transform.scale(tex, (self.blockSize, self.blockSize) )
+            rect = tex.get_rect()
+            rect = rect.move((x,y))
+            screen.blit(tex, rect)
 
     def drawMap(self, screen, pygame):
         for x in range(0,self.halfWidth,self.blockSize):

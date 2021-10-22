@@ -3,14 +3,20 @@ from Player import *
 from Map import *
 from colors import COLORS, wallTextures
 class Raycaster(object):
-    def __init__(self, size =(500,500), map = None, pSize = (10,10), pPosition = [50,100], pSpeed=2, pColor=(0,0,0)):
+    def __init__(self, size =(500,500), pSize = (10,10), pPosition = [50,100], pSpeed=2, pColor=(0,0,0)):
         pygame.init()
         self.size = size
-        self.map = Map(map,size) if map else None
+        self.map = Map(size)
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont("Arial", 25)
-        self.player = Player(pPosition,pSize,pSpeed, color = pColor)
+        self.pPosition = pPosition
+        self.pSize = pSize
+        self.pSpeed = pSpeed
+        self.pColor = pColor
+        self.actualMap = 1
+        self.player = Player(self.pPosition,self.pSize,self.pSpeed, color = self.pColor)
         self.screen = None
+        self.maps = None
     def fps(self):
         fps = str(int(self.clock.get_fps()))
         fps = self.font.render(fps, 1, pygame.Color("white"))
@@ -46,7 +52,12 @@ class Raycaster(object):
         pygame.display.set_caption("RayCaster")
         run = 1
         while run:
-            self.player.movePlayer(pygame, self.map)
+            next = self.player.movePlayer(pygame, self.map)
+            if next:
+                self.actualMap += 1
+                self.map = Map(self.size, actualMap = self.actualMap)
+                self.player = Player([50,100],(10,10),2, color = self.pColor)
+                self.player.drawPlayer(screen)
             if self.map:
                 # Techo
                 screen.fill(COLORS[7], (int(self.size[0] / 2), 0,  int(self.size[0] / 2), int(self.size[1] / 2)))
