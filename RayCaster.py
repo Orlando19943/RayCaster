@@ -3,7 +3,7 @@ from Player import *
 from Map import *
 from colors import COLORS, wallTextures
 class Raycaster(object):
-    def __init__(self, size =(500,500), map = None, pSize = (10,10), pPosition = [50,100], pSpeed=2, pColor=(0,0,0), limit = False):
+    def __init__(self, size =(500,500), map = None, pSize = (10,10), pPosition = [50,100], pSpeed=2, pColor=(0,0,0)):
         pygame.init()
         self.size = size
         self.map = Map(map,size) if map else None
@@ -11,7 +11,6 @@ class Raycaster(object):
         self.font = pygame.font.SysFont("Arial", 25)
         self.player = Player(pPosition,pSize,pSpeed, color = pColor)
         self.screen = None
-        self.limit = limit
     def fps(self):
         fps = str(int(self.clock.get_fps()))
         fps = self.font.render(fps, 1, pygame.Color("white"))
@@ -19,7 +18,7 @@ class Raycaster(object):
 
     def drawRayCaster(self):
         for i in range(self.player.ray):
-            id, dist, pdx, pdy, angle, tx = self.player.drawRay(i, self.map, self.limit)
+            id, dist, pdx, pdy, angle, tx = self.player.drawRay(i, self.map)
             x = self.player.position[0] + (pdx) * dist
             y = self.player.position[1] + (pdy) * dist
             pygame.draw.line(self.screen,self.player.color,(self.player.position),(x,y))
@@ -48,10 +47,10 @@ class Raycaster(object):
         run = 1
         while run:
             for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN:
-                    self.player.movePlayer(event.key, pygame, self.map)
+
                 if event.type == pygame.QUIT:
                     run = 0
+            self.player.movePlayer(pygame, self.map)
             screen.fill(COLORS[1])
             if self.map:
                 # Techo
