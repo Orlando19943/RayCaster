@@ -7,6 +7,7 @@ GREEN = (0,255,0)
 PURPLE = (131,12,229)
 FOG = (194,211,211)
 BLACK2 = (22,22,22)
+YELLOW = (255,255,0)
 COLORS = {
     1: BLACK,
     2: WHITE,
@@ -16,6 +17,7 @@ COLORS = {
     6: GREEN,
     7: FOG,
     8: BLACK2,
+    9: YELLOW,
 }
 
 wallTextures = {

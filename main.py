@@ -6,7 +6,7 @@ HEIGHT = 400
 MAP = "./map.txt"
 MAINSCREEN = "./textures/mainScreen.jpg"
 start = MainScreen((WIDTH,HEIGHT), image=MAINSCREEN)
-play = True
+play = start.run()
 if play:
     game = Raycaster((WIDTH,HEIGHT), MAP, pColor=COLORS[1])
     game.run()

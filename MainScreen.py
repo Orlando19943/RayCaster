@@ -30,6 +30,10 @@ class MainScreen(object):
         enterText = self.font.render("Play", 1, pygame.Color("black"))
         quitText = self.font.render("Exit", 1, pygame.Color("black"))
         start = 0
+        screen.fill(COLORS[7], quit)
+        screen.blit(quitText, (self.centerX-40,self.centerY+60))
+        screen.fill(COLORS[7], enter)
+        screen.blit(enterText, (self.centerX-40,self.centerY+20))
         while run:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -45,12 +49,21 @@ class MainScreen(object):
                 pygame.mouse.set_cursor(pygame.cursors.broken_x)
             else:
                 pygame.mouse.set_cursor(pygame.cursors.tri_left)
+            if self.centerX-70 <= mouse[0] <= self.centerX + 33 and (self.centerY+20 <= mouse[1] <= self.centerY +50):
+                screen.fill(COLORS[9], enter)
+                screen.blit(enterText, (self.centerX-40,self.centerY+20))
+            else:
+                screen.fill(COLORS[7], enter)
+                screen.blit(enterText, (self.centerX-40,self.centerY+20))
+            if self.centerX-70 <= mouse[0] <= self.centerX + 33 and (self.centerY+58 <= mouse[1] <= self.centerY +90):
+                screen.fill(COLORS[9], quit)
+                screen.blit(quitText, (self.centerX-40,self.centerY+60))
+            else:
+                screen.fill(COLORS[7], quit)
+                screen.blit(quitText, (self.centerX-40,self.centerY+60))
             screen.fill(COLORS[1],(0,0,30,30))
             screen.blit(self.fps(), (0,0))
-            screen.fill(COLORS[7], enter)
-            screen.blit(enterText, (self.centerX-40,self.centerY+20))
-            screen.fill(COLORS[7], quit)
-            screen.blit(quitText, (self.centerX-40,self.centerY+60))
+
             self.clock.tick(60)
             pygame.display.update()
 

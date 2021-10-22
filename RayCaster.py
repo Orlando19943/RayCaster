@@ -46,12 +46,7 @@ class Raycaster(object):
         pygame.display.set_caption("RayCaster")
         run = 1
         while run:
-            for event in pygame.event.get():
-
-                if event.type == pygame.QUIT:
-                    run = 0
             self.player.movePlayer(pygame, self.map)
-            screen.fill(COLORS[1])
             if self.map:
                 # Techo
                 screen.fill(COLORS[7], (int(self.size[0] / 2), 0,  int(self.size[0] / 2), int(self.size[1] / 2)))
@@ -63,7 +58,11 @@ class Raycaster(object):
                 screen.fill(COLORS[1],(0,0,30,30))
                 screen.blit(self.fps(), (0,0))
                 self.drawRayCaster()
-            self.clock.tick(60)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = 0
             pygame.display.flip()
+            self.clock.tick(60)
 
         pygame.quit()
