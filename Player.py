@@ -2,7 +2,7 @@ from math import pi, cos, sin, tan
 from random import randint
 from colors import COLORS
 class Player(object):
-    def __init__(self, position, size, speed =0.01, color = (255,0,0), angle = 0, angularSpeed = 0.05, fov = 60, ray = 50):
+    def __init__(self, position, size, speed =0.01, color = (255,0,0), angle = 0, angularSpeed = 0.05, fov = 60, ray = 100):
         self.position = position
         self.speed = speed
         self.angularSpeed = angularSpeed

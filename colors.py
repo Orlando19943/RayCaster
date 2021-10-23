@@ -5,8 +5,9 @@ BLUE = (0,0,255)
 RED = (255,0,0)
 GREEN = (0,255,0)
 PURPLE = (131,12,229)
-FOG = (194,211,211)
+FOG = (142,144,143)
 BLACK2 = (22,22,22)
+BLACKT = (0,0,0, 128)
 YELLOW = (242, 206, 24)
 COLORS = {
     1: BLACK,
@@ -18,6 +19,7 @@ COLORS = {
     7: FOG,
     8: BLACK2,
     9: YELLOW,
+    10: BLACKT,
 }
 
 wallTextures = {
