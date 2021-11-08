@@ -31,7 +31,8 @@ wallTextures = {
     }
 # Posicion, tamaño y ubicacion del sprite en la carpeta
 sprites = [
-    [(400,100), 50, './enemies/sprite1.png']
+    [(200,80), 25, './enemies/sprite1.png'],
+    [(400,80), 25, './enemies/sprite1.png']
 ]
 
 MAPS = {

@@ -25,6 +25,9 @@ class Raycaster(object):
         self.pause = False
         self.zbuffer = [float('inf') for z in range(size[0])]
         self.sprites = [Sprite(sprite[0],sprite[1],sprite[2]) for sprite in sprites]
+        self.delta = 0
+        self.wallTextures = []
+
     def fps(self):
         fps = str(int(self.clock.get_fps()))
         fps = self.font.render(fps, 1, pygame.Color("white"))
@@ -36,17 +39,15 @@ class Raycaster(object):
             x = self.player.position[0] + (pdx) * dist
             y = self.player.position[1] + (pdy) * dist
             """ if i == int(self.player.ray/2):
-                pygame.draw.line(self.screen,self.player.color,(self.player.position),(x,y)) """
+                pygame.draw.line(self.minimapScreen,self.player.color,(self.player.position),(x,y)) """
             rayWidth = int(( self.map.halfWidth/ self.player.ray))+1
+            for column  in range(rayWidth):
+                self.zbuffer[column  * (rayWidth-1) + column ] = dist
             x = int(( (i / self.player.ray) * self.map.halfWidth))
-            # Esto lo hago porque en algunas ocasiones, deja algunos espacios entre cada columna 
-            h = self.size[1] / (dist*cos((angle-self.player.angle)))
-            h *= self.map.blockHeight
+            h = (self.size[1]*self.map.blockHeight) / (dist*cos((angle-self.player.angle)))
             y = int((self.map.halfHeight-h) / 2)
-            color_k = (1 - min(1, dist / self.map.maxDistance)) * 255
             tex = wallTextures[int(id)]
             tex = pygame.transform.scale(tex, (tex.get_width() * rayWidth, int(h)))
-            #tex.fill((color_k,color_k,color_k), special_flags=pygame.BLEND_MULT)
             tx = int(tx * tex.get_width())
             self.screen.blit(tex, (x, y), (tx,0,rayWidth,tex.get_height()))
         sightRect = (int(self.size[0] / 2 - 2), int(self.size[1] / 2 - 2), 5,5 )
@@ -62,6 +63,7 @@ class Raycaster(object):
         pygame.mixer.init()
         pygame.mixer.music.load(MUSIC[0])
         pygame.mixer.music.play(-1) # If the loops is -1 then the music will repeat indefinitely.
+        self.wallTextures = {i+2: wallTextures[i+2].convert() for i in range(len(wallTextures))}
         while run:
             next = self.player.movePlayer(pygame, self.map, 1)
             if next:
@@ -87,7 +89,7 @@ class Raycaster(object):
 
             self.screen.blit(level, (self.size[0]-100,0))
             pygame.display.flip()
-            self.clock.tick(180)
+            self.delta = self.clock.tick(90)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = 0

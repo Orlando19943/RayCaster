@@ -2,8 +2,8 @@ import pygame
 from RayCaster import Raycaster
 from MainScreen import MainScreen
 
-WIDTH = 600 
-HEIGHT = 600
+WIDTH = 500 
+HEIGHT = 500
 screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.DOUBLEBUF | pygame.HWACCEL )
 minimapScreen = pygame.Surface((WIDTH, HEIGHT) )
 start = MainScreen(screen,(WIDTH,HEIGHT))

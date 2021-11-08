@@ -22,23 +22,21 @@ class Sprite(object):
         spriteWidth = spriteHeight * aspectRatio
 
         # Buscar el punto inicial para dibujar el sprite
-        angleDif = (spriteAngle - player.angle * 180/pi) % 360
+        angleDif = (spriteAngle - (player.angle * 180/pi)) % 360
         angleDif = (angleDif - 360) if angleDif > 180 else angleDif
         startX = angleDif * screenSize[0] / player.fov
-        startX += (screenSize[0] /  2) - (spriteWidth  / 2)
-        startY = (screenSize[1] /  2) - (spriteHeight / 2)
+        startX += int((screenSize[0]-spriteWidth)/2)
+        startY = int((screenSize[1]-spriteHeight)/2)
         startX = int(startX)
-        startY = int(startY)
         self.hitEnemy = False
         for x in range(startX, startX + int(spriteWidth)):
-            if (0 < x < screenSize[0]) and zbuffer[x] >= spriteDist:
+            if (0 < x < screenSize[0] and zbuffer[x] >= spriteDist):
                 for y in range(startY, startY + int(spriteHeight)):
                     tx = int((x - startX) * self.sprite.get_width() / spriteWidth )
                     ty = int((y - startY) * self.sprite.get_height() / spriteHeight )
                     texColor = self.sprite.get_at((tx, ty))
                     if texColor != SPRITE_BACKGROUND and texColor[3] > 128:
                         screen.set_at((x,y), texColor)
-
                         if y == screenSize[1] / 2:
                             zbuffer[x] = spriteDist
                             if x == screenSize[0] / 2:
