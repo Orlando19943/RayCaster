@@ -1,15 +1,20 @@
-from colors import COLORS, wallTextures, MAPS
+from utils import COLORS, wallTextures, MAPS
 from math import pi, cos, sin
 class Map(object):
     def __init__(self,size, blockSize = 40, wallheight = 40, actualMap = 1):
         self.actualMap = actualMap
         self.file = MAPS[self.actualMap]
         self.map = []
+        self.size = size
         self.blockSize = blockSize
+        self.blockWidth = int(size[0]/20)
+        self.blockHeight = int(size[1]/20)
         self.wallheight = wallheight
-        self.halfWidth = int(size[0]/2)
+        self.halfWidth = int(size[0])
         self.halfHeight = int(size[1])
         self.maxDistance = 300
+        self.minimapHeight = int(size[1]/5)
+        self.minimapWidth = int(size[0]/5)
         self.limitDistance = self.maxDistance * 0.6
         self.load_map()
 
@@ -19,28 +24,38 @@ class Map(object):
                     for line in file.readlines():
                         self.map.append( list(line.rstrip()))
 
-    def drawBlock(self, x, y, id, screen, pygame):
+    def drawBlock(self, x, y, id, screen, pygame, minimapScreen):
         if int(id) == 2:
-            screen.fill(COLORS[2], (x,y, self.blockSize, self.wallheight))
+            #screen.fill(COLORS[7], (x,y, self.blockWidth,self.blockHeight))
             return
         elif int(id) == 9:
-            screen.fill(COLORS[6], (x,y, self.blockSize, self.wallheight))
+            #screen.fill(COLORS[6], (x,y, self.blockWidth,self.blockHeight))
+            minimapScreen.fill(COLORS[6], (x*2,y*2, self.blockWidth*2,self.blockHeight*2))
             return
         elif 3<=int(id)<=6:
             tex = wallTextures[int(id)]
-            tex = pygame.transform.scale(tex, (self.blockSize, self.blockSize) )
+            tex = pygame.transform.scale(tex, (self.blockWidth*2,self.blockHeight*2) )
             rect = tex.get_rect()
-            rect = rect.move((x,y))
-            screen.blit(tex, rect)
+            rect = rect.move((x*2,y*2))
+            minimapScreen.blit(tex, rect)
+            #screen.blit(tex, rect)
 
-    def drawMap(self, screen, pygame):
-        for x in range(0,self.halfWidth,self.blockSize):
-            for y in range(0,self.halfHeight,self.blockSize):
-                i = int(x/self.blockSize)
-                j = int(y/self.blockSize)
+    def drawMap(self, screen, pygame, minimapScreen, player, sprites):
+        minimapScreen.fill(pygame.Color("gray"))
+        for x in range(0,self.halfWidth,self.blockWidth):
+            for y in range(0,self.halfHeight,self.blockHeight):
+                i = int(x/self.blockWidth)
+                j = int(y/self.blockHeight)
                 if j < len(self.map):
                     if i < len(self.map[j]):
                         if self.map[j][i] != ' ':
-                            self.drawBlock(x, y, self.map[j][i], screen, pygame)
+                            self.drawBlock(x, y, self.map[j][i], screen, pygame, minimapScreen)
                         else:
-                            self.drawBlock(x, y, 2, screen, pygame)
+                            self.drawBlock(x, y, 2, screen, pygame, minimapScreen)
+        rect = (int(player.position[0] - 4)*2, int((player.position[1]) - 4)*2, 20,20)
+        minimapScreen.fill(pygame.Color('black'), rect )
+        for sprite in sprites:
+            rect = ((sprite.position[0] - 4)*2, (sprite.position[1] - 4)*2, 20,20)
+            minimapScreen.fill(pygame.Color('red'), rect )
+        minimapScreen = pygame.transform.scale(minimapScreen, (self.minimapWidth,self.minimapHeight) )
+        screen.blit(minimapScreen, (self.size[0] - self.minimapWidth,self.size[1] - self.minimapHeight))

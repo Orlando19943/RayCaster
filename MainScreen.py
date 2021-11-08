@@ -1,7 +1,7 @@
 import pygame
 from Player import *
 from Map import *
-from colors import COLORS
+from utils import COLORS
 class MainScreen(object):
     def __init__(self, screen, size =(500,500)):
         pygame.init()
@@ -73,7 +73,6 @@ class MainScreen(object):
             else:
                 self.screen.fill(COLORS[7], quit)
                 self.screen.blit(quitText, (self.centerX*0.91,self.centerY+60))
-
             pygame.display.update()
 
         return start

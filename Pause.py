@@ -1,7 +1,7 @@
 import pygame
 from Player import *
 from Map import *
-from colors import COLORS
+from utils import COLORS
 class Pause(object):
     def __init__(self, screen, size =(500,500)):
         pygame.init()
