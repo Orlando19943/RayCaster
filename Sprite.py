@@ -7,7 +7,6 @@ class Sprite(object):
         self.position = [i/2 for i in position]
         self.size = size
         self.sprite = pygame.image.load(sprite)
-        self.hitEnemy = False
         
     def drawSprite(self, player, screenSize, zbuffer, screen):
         # Pitagoras
@@ -28,7 +27,6 @@ class Sprite(object):
         startX += int((screenSize[0]-spriteWidth)/2)
         startY = int((screenSize[1]-spriteHeight)/2)
         startX = int(startX)
-        self.hitEnemy = False
         for x in range(startX, startX + int(spriteWidth)):
             if (0 < x < screenSize[0] and zbuffer[x] >= spriteDist):
                 for y in range(startY, startY + int(spriteHeight)):
@@ -36,8 +34,4 @@ class Sprite(object):
                     ty = int((y - startY) * self.sprite.get_height() / spriteHeight )
                     texColor = self.sprite.get_at((tx, ty))
                     if texColor != SPRITE_BACKGROUND and texColor[3] > 128:
-                        screen.set_at((x,y), texColor)
-                        if y == screenSize[1] / 2:
-                            zbuffer[x] = spriteDist
-                            if x == screenSize[0] / 2:
-                                self.hitEnemy = True
+                        screen.set_at((x,y+20), texColor)

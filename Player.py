@@ -2,7 +2,7 @@ from math import pi, cos, sin, tan
 from random import randint
 from utils import COLORS
 class Player(object):
-    def __init__(self, position, size, speed =0.01, color = (255,0,0), angle = 0, angularSpeed = 0.04, fov = 60, ray = 200):
+    def __init__(self, position, size, speed =0.01, color = (255,0,0), angle = 0, angularSpeed = 0.04, fov = 60, ray = 100):
         self.position = [i/2 for i in position]
         self.speed = speed
         self.angularSpeed = angularSpeed
@@ -34,7 +34,7 @@ class Player(object):
             y += pdy
             i = int((x)/map.blockWidth)
             j = int((y)/map.blockHeight)
-            if (map.map[j][i] != ' ' and int(map.map[j][i]) != 9):
+            if (map.map[j][i] != ' ' and map.map[j][i] != "a"):
                 hitX = x - i * map.blockWidth
                 hitY = y - j * map.blockHeight
                 hit = 0
@@ -85,8 +85,8 @@ class Player(object):
         i = int((x)/map.blockWidth)
         j = int((y)/map.blockHeight)
 
-        if map.map[j][i] == ' ' or map.map[j][i] == '9':
-            if map.map[j][i] == '9':
+        if map.map[j][i] == ' ' or map.map[j][i] == 'a':
+            if map.map[j][i] == 'a':
                 return True
             self.position[0] = x
             self.position[1] = y

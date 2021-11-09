@@ -26,15 +26,15 @@ class MainScreen(object):
         self.image = pygame.transform.scale(self.image, (self.size[0], self.size[1]))
         self.screen.blit(self.image, (0,0))
         run = 1
-        x = self.centerX*0.91
-        quit = ((self.centerX - 70,self.centerY+60,100,30))
-        enter = ((self.centerX - 70,self.centerY+20,100,30))
+        x = self.centerX*0.92
+        quit = ((self.centerX - 60,self.centerY+60,100,30))
+        enter = ((self.centerX - 60,self.centerY+20,100,30))
         enterText = self.font.render("Play", 1, pygame.Color("black"))
         title = self.fontTitle.render("RayCaster", 1, pygame.Color("black"))
         quitText = self.font.render("Exit", 1, pygame.Color("black"))
         start = 0
         self.screen.fill(COLORS[7], quit)
-        self.screen.blit(title, (self.centerX*0.81,self.centerY*0.3))
+        self.screen.blit(title, (self.centerX*0.8,self.centerY*0.3))
         while run:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -52,13 +52,13 @@ class MainScreen(object):
                         start = self.option
                         run = 0
             mouse = pygame.mouse.get_pos()
-            if self.centerX-70 <= mouse[0] <= self.centerX + 33 and (self.centerY+58 <= mouse[1] <= self.centerY +90 or self.centerY+20 <= mouse[1] <= self.centerY +50):
+            if self.centerX-60 <= mouse[0] <= self.centerX + 37 and (self.centerY+58 <= mouse[1] <= self.centerY +90 or self.centerY+20 <= mouse[1] <= self.centerY +50):
                 pygame.mouse.set_cursor(pygame.cursors.broken_x)
             else:
                 pygame.mouse.set_cursor(pygame.cursors.tri_left)
-            if self.centerX-70 <= mouse[0] <= self.centerX + 33 and (self.centerY+20 <= mouse[1] <= self.centerY +50):
+            if self.centerX-60 <= mouse[0] <= self.centerX + 37 and (self.centerY+20 <= mouse[1] <= self.centerY +50):
                 self.option = True
-            if self.centerX-70 <= mouse[0] <= self.centerX + 33 and (self.centerY+58 <= mouse[1] <= self.centerY +90):
+            if self.centerX-60 <= mouse[0] <= self.centerX + 37 and (self.centerY+58 <= mouse[1] <= self.centerY +90):
                 self.option = False
             # ------------------------------
             if self.option:
@@ -69,10 +69,10 @@ class MainScreen(object):
                 self.screen.blit(enterText, (x,self.centerY+20))
             if not self.option:
                 self.screen.fill(COLORS[9], quit)
-                self.screen.blit(quitText, (self.centerX*0.91,self.centerY+60))
+                self.screen.blit(quitText, (x,self.centerY+60))
             else:
                 self.screen.fill(COLORS[7], quit)
-                self.screen.blit(quitText, (self.centerX*0.91,self.centerY+60))
+                self.screen.blit(quitText, (x,self.centerY+60))
             pygame.display.update()
 
         return start

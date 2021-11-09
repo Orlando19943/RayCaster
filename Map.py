@@ -25,14 +25,17 @@ class Map(object):
                         self.map.append( list(line.rstrip()))
 
     def drawBlock(self, x, y, id, screen, pygame, minimapScreen):
-        if int(id) == 2:
+        if id == "a":
+            tex = wallTextures[12]
+            tex = pygame.transform.scale(tex, (self.blockWidth*2,self.blockHeight*2) )
+            rect = tex.get_rect()
+            rect = rect.move((x*2,y*2))
+            minimapScreen.blit(tex, rect)
+            return
+        elif id == "b":
             #screen.fill(COLORS[7], (x,y, self.blockWidth,self.blockHeight))
             return
-        elif int(id) == 9:
-            #screen.fill(COLORS[6], (x,y, self.blockWidth,self.blockHeight))
-            minimapScreen.fill(COLORS[6], (x*2,y*2, self.blockWidth*2,self.blockHeight*2))
-            return
-        elif 3<=int(id)<=6:
+        elif 1<=int(id)<=9:
             tex = wallTextures[int(id)]
             tex = pygame.transform.scale(tex, (self.blockWidth*2,self.blockHeight*2) )
             rect = tex.get_rect()
@@ -51,7 +54,7 @@ class Map(object):
                         if self.map[j][i] != ' ':
                             self.drawBlock(x, y, self.map[j][i], screen, pygame, minimapScreen)
                         else:
-                            self.drawBlock(x, y, 2, screen, pygame, minimapScreen)
+                            self.drawBlock(x, y, "b", screen, pygame, minimapScreen)
         rect = (int(player.position[0] - 4)*2, int((player.position[1]) - 4)*2, 20,20)
         minimapScreen.fill(pygame.Color('black'), rect )
         for sprite in sprites:

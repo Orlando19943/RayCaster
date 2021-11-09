@@ -23,17 +23,39 @@ COLORS = {
 }
 
 wallTextures = {
-    2: pygame.image.load('textures/BIGDOOR2.png'),
-    3: pygame.image.load('textures/BIGDOOR3.png'),
-    4: pygame.image.load('textures/BIGDOOR4.png'),
-    5: pygame.image.load('textures/STARG3.png'),
-    6: pygame.image.load('textures/STARGR2.png'),
+    3: pygame.image.load('textures/minecraftTextures1.png'),
+    4: pygame.image.load('textures/minecraftTextures2.png'),
+    5: pygame.image.load('textures/minecraftTextures3.png'),
+    6: pygame.image.load('textures/minecraftTextures4.png'),
+    7: pygame.image.load('textures/minecraftTextures5.png'),
+    8: pygame.image.load('textures/minecraftTextures6.png'),
+    9: pygame.image.load('textures/minecraftTextures7.png'),
+    1: pygame.image.load('textures/minecraftTextures8.png'),
+    2: pygame.image.load('textures/minecraftTextures9.png'),
+    12: pygame.image.load('textures/star.png'),
     }
 # Posicion, tamaño y ubicacion del sprite en la carpeta
-sprites = [
-    [(200,80), 25, './enemies/sprite1.png'],
-    [(400,80), 25, './enemies/sprite1.png']
+sprites1 = [
+    [(400,80), 10, './enemies/fire.png'],
+    [(400,400), 10, './enemies/mob1.png'],
+    [(400,200), 10, './enemies/mob2.png'],
 ]
+sprites2 = [
+    [(100,300), 10, './enemies/mob2.png'],
+    [(400,400), 10, './enemies/fire2.png'],
+    [(400,100), 10, './enemies/fire.png'],
+]
+sprites3 = [
+    [(400,80), 10, './enemies/fire.png'],
+    [(100,400), 10, './enemies/mob3.png'],
+    [(400,200), 10, './enemies/mob2.png'],
+]
+
+SPRITES = [
+    sprites1,
+    sprites2,
+    sprites3,
+    ]
 
 MAPS = {
     1: "./maps/map.txt",

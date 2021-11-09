@@ -27,8 +27,8 @@ class Pause(object):
         self.screen.blit(self.image, (0,0))
         run = 1
         close = True
-        quit = ((self.centerX - 70,self.centerY+60,100,30))
-        enter = ((self.centerX - 70,self.centerY+20,100,30))
+        quit = ((self.centerX - 60,self.centerY+60,100,30))
+        enter = ((self.centerX - 60,self.centerY+20,100,30))
         enterText = self.font.render("Continue", 1, pygame.Color("black"))
         x = self.centerX*0.87
         title = self.fontTitle.render("Pause", 1, pygame.Color("black"))
@@ -74,10 +74,10 @@ class Pause(object):
                 self.screen.blit(enterText, (x,self.centerY+20))
             if not self.option:
                 self.screen.fill(COLORS[9], quit)
-                self.screen.blit(quitText, (self.centerX*0.88,self.centerY+60))
+                self.screen.blit(quitText, (x+5,self.centerY+60))
             else:
                 self.screen.fill(COLORS[7], quit)
-                self.screen.blit(quitText, (self.centerX*0.88,self.centerY+60))
+                self.screen.blit(quitText, (x+5,self.centerY+60))
 
             pygame.display.update()
 
