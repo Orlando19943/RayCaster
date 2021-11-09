@@ -1,6 +1,4 @@
-from math import pi, cos, sin, tan
-from random import randint
-from utils import COLORS
+from math import pi, cos, sin
 class Player(object):
     def __init__(self, position, size, speed =0.01, color = (255,0,0), angle = 0, angularSpeed = 0.04, fov = 60, ray = 100):
         self.position = [i/2 for i in position]

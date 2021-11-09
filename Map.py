@@ -1,5 +1,4 @@
-from utils import COLORS, wallTextures, MAPS
-from math import pi, cos, sin
+from utils import wallTextures, MAPS
 class Map(object):
     def __init__(self,size, blockSize = 40, wallheight = 40, actualMap = 1):
         self.actualMap = actualMap
@@ -24,7 +23,7 @@ class Map(object):
                     for line in file.readlines():
                         self.map.append( list(line.rstrip()))
 
-    def drawBlock(self, x, y, id, screen, pygame, minimapScreen):
+    def drawBlock(self, x, y, id, pygame, minimapScreen):
         if id == "a":
             tex = wallTextures[12]
             tex = pygame.transform.scale(tex, (self.blockWidth*2,self.blockHeight*2) )
@@ -33,7 +32,6 @@ class Map(object):
             minimapScreen.blit(tex, rect)
             return
         elif id == "b":
-            #screen.fill(COLORS[7], (x,y, self.blockWidth,self.blockHeight))
             return
         elif 1<=int(id)<=9:
             tex = wallTextures[int(id)]
@@ -41,7 +39,6 @@ class Map(object):
             rect = tex.get_rect()
             rect = rect.move((x*2,y*2))
             minimapScreen.blit(tex, rect)
-            #screen.blit(tex, rect)
 
     def drawMap(self, screen, pygame, minimapScreen, player, sprites):
         minimapScreen.fill(pygame.Color("gray"))
@@ -52,9 +49,9 @@ class Map(object):
                 if j < len(self.map):
                     if i < len(self.map[j]):
                         if self.map[j][i] != ' ':
-                            self.drawBlock(x, y, self.map[j][i], screen, pygame, minimapScreen)
+                            self.drawBlock(x, y, self.map[j][i], pygame, minimapScreen)
                         else:
-                            self.drawBlock(x, y, "b", screen, pygame, minimapScreen)
+                            self.drawBlock(x, y, "b", pygame, minimapScreen)
         rect = (int(player.position[0] - 4)*2, int((player.position[1]) - 4)*2, 20,20)
         minimapScreen.fill(pygame.Color('black'), rect )
         for sprite in sprites:
