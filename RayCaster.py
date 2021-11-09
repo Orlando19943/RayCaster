@@ -6,7 +6,7 @@ from utils import COLORS, wallTextures, SPRITES, MUSIC
 from Pause import Pause
 from Sprite import Sprite
 class Raycaster(object):
-    def __init__(self, screen,minimapScreen, size =(500,500), pSize = (10,10), pPosition = [100,100], pPositionI = [100,100], pSpeed=2, pColor=(0,0,0), actualMap=1):
+    def __init__(self, screen,minimapScreen, size =(500,500), pSize = (10,10), pPosition = [100,100], pPositionI = [100,100], pSpeed=2, pColor=(0,0,0), actualMap=1, ray = 100):
         self.size = size
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont("Arial", 25)    
@@ -17,7 +17,8 @@ class Raycaster(object):
         self.pSpeed = pSpeed
         self.pColor = pColor
         self.actualMap = actualMap
-        self.player = Player(self.pPosition,self.pSize,self.pSpeed, color = self.pColor)
+        self.ray = ray
+        self.player = Player(self.pPosition,self.pSize,self.pSpeed, color = self.pColor, ray = self.ray)
         self.map = Map(self.size, actualMap = self.actualMap)
         self.screen = screen
         self.minimapScreen = minimapScreen
@@ -59,6 +60,7 @@ class Raycaster(object):
         pygame.mouse.set_cursor(pygame.cursors.tri_left)
         pygame.mixer.init()
         pygame.mixer.music.load(MUSIC[0])
+        pygame.mixer.music.set_volume(.1)
         pygame.mixer.music.play(-1)
         self.wallTextures = {i: wallTextures[i].convert() for i in wallTextures}
         while run:
@@ -69,7 +71,7 @@ class Raycaster(object):
                     run = 0
                     return False
                 self.map = Map(self.size, actualMap = self.actualMap)
-                self.player = Player([100,100],self.pSize,self.pSpeed, color = self.pColor)
+                self.player = Player([100,100],self.pSize,self.pSpeed, color = self.pColor, ray=self.ray)
                 self.sprites = [Sprite(sprite[0],sprite[1],sprite[2]) for sprite in SPRITES[self.actualMap-1]]
                 level = self.font.render("Nivel: " + str(self.actualMap), 1, pygame.Color("black"))
             if self.map:
