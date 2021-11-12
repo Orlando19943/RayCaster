@@ -3,8 +3,8 @@ class Map(object):
     def __init__(self,size, blockSize = 40, wallheight = 40, actualMap = 1):
         self.actualMap = actualMap
         self.file = MAPS[self.actualMap]
-        self.map = []
         self.size = size
+        self.map = []
         self.blockSize = blockSize
         self.blockWidth = int(size[0]/20)
         self.blockHeight = int(size[1]/20)
